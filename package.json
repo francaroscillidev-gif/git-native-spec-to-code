@@ -1,0 +1,38 @@
+{
+  "name": "git-native-spec-to-code",
+  "version": "1.0.0",
+  "description": "Git-Native Spec-to-Code Verification Agent with Property-Based Testing, Mutation Testing & Self-Healing",
+  "author": "franca roscilli <francaroscillidev@gmail.com> (https://github.com/francaroscillidev-gif)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/francaroscillidev-gif/git-native-spec-to-code"
+  },
+  "main": "dist/cli/index.js",
+  "scripts": {
+    "build": "tsc",
+    "verify": "tsx src/cli/index.ts verify",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "formal-verification",
+    "property-based-testing",
+    "fast-check",
+    "self-healing",
+    "mutation-testing"
+  ],
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@babel/generator": "^7.26.5",
+    "@babel/parser": "^7.26.7",
+    "@babel/traverse": "^7.26.7",
+    "@types/node": "^22.13.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "dotenv": "^16.4.7",
+    "fast-check": "^3.23.2",
+    "simple-git": "^3.27.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  }
+}

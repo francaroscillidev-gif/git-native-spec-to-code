@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  spec-verifier:
+    build: .
+    volumes:
+      - ./:/workspace
+    network_mode: "none" # Isolamento completo: nessuna chiamata di rete durante i test
+    mem_limit: 1024m
+    cpus: 1.0
+    command: ["verify", "--spec", "examples/rate-limiter/spec.md", "--target-dir", "./examples/rate-limiter/verified"]
