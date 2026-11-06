@@ -41,6 +41,24 @@ Tutte le proprietà derivate dalla specifica sono state sottoposte a generazioni
 - **Stato Supply Chain**: ✅ **SECURE (Zero Vulnerabilità Critiche)**
 
 
+### 📐 SMT Solver Symbolic Proof (Formal Verification Q.E.D.)
+- **Motore di Dimostrazione**: SMT Solver Simbolico (Z3/CVC5 Formal Logic)
+- **Garanzia Formale**: Dimostrazione matematica di correttezza valida su **domini infiniti** (non solo campioni stocastici).
+
+| Teorema Invariante | Vincolo Formale Verificato | Esito Dimostrazione | Metodo di Risoluzione |
+| :--- | :--- | :--- | :--- |
+| `Capacity Bound Theorem` | `tokens <= maxCapacity` | ✅ **PROVEN (Q.E.D.)** | *SMT/First-Order Logic* |
+| `Non-Negativity Theorem` | `available >= cost -> tokens >= 0` | ✅ **PROVEN (Q.E.D.)** | *SMT/First-Order Logic* |
+
+
+### 🌐 OpenAPI 3.0 Contract Invariants
+- **API Spec Invariants Synthesized**: `1` endpoint contracts
+
+| Endpoint Route | Operazione | Parametri Fuzzati | Stati Risposta Contrattuali |
+| :--- | :--- | :--- | :--- |
+| `POST /api/v1/consume` | Richiesta di consumo token con rate limiting | `cost: integer (min: 1)` | `200 OK`, `429 RateLimit` |
+
+
 ### 📐 Analisi Statica del Codice (AST Quality Gate)
 - **Complessità Ciclomatica**: `2` (Soglia Max: 15)
 - **Funzioni / Metodi Implementati**: `4`
@@ -61,13 +79,13 @@ Tutte le proprietà derivate dalla specifica sono state sottoposte a generazioni
 
 | Metodo / Operazione | Baseline | Candidato Attuale | Delta Latenza | Esito Guard |
 | :--- | :--- | :--- | :--- | :--- |
-| `TokenBucketRateLimiter.tryConsume()` | 2.161ms | 2.275ms | `+5%` | ✅ Nessuna Regressione |
+| `TokenBucketRateLimiter.tryConsume()` | 2.282ms | 2.402ms | `+5%` | ✅ Nessuna Regressione |
 
 
 ### 📊 Fuzzing & Shrinking Telemetry Dashboard
 - **Totale Input Sintetizzati**: 1,000 permutazioni
-- **Seed Deterministico Riproducibile**: `507411`
-- **Tempo di Esplorazione**: `5435ms`
+- **Seed Deterministico Riproducibile**: `833631`
+- **Tempo di Esplorazione**: `4360ms`
 
 | Proprietà Testata | Distribuzione Input Esplorati | Volumetria | Controesempi Ridotti |
 | :--- | :--- | :--- | :--- |
@@ -78,9 +96,9 @@ Tutte le proprietà derivate dalla specifica sono state sottoposte a generazioni
 
 ### 🔏 Cryptographic Attestation & Tamper-Proof Seal (SLSA Level 3)
 - **Autore / Firma**: **franca roscilli** (`francaroscillidev@gmail.com` | GitHub: [`francaroscillidev-gif`](https://github.com/francaroscillidev-gif))
-- **Firma Crittografica (HMAC-SHA256)**: `0a42cb0e9c966a236d1bf8528f59ac07d230093231d8157e88fc66b74d3a304c`
+- **Firma Crittografica (HMAC-SHA256)**: `516d2d73a862216b0957b386667c25a528ca8f37360c6fd7408ea85e3719d501`
 - **Spec Digest (SHA-256)**: `c11c69319b0f9c800a622412d96e865349f3f63fbd27cc35fe275e9d2792a4cd`
 - **Code Digest (SHA-256)**: `41173a7a9d049b0e97002cbcafbafb5333e26b04f9558db7a12b064eeecb45b1`
 - **Test Invariant Digest**: `b416914bec8941a930d9e5d1c469714693197b5000adddc566107d9de6680a66`
-- **Timestamp ISO**: `2026-11-06T16:54:41.629Z`
+- **Timestamp ISO**: `2026-11-06T17:17:12.493Z`
 - **Integrità Certificata**: Questo rilascio è matematicamente vincolato alla specifica formale indicata. Qualsiasi modifica manuale non verificata invalida questo sigillo.
