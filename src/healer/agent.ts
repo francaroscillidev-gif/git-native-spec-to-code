@@ -13,6 +13,8 @@ import { RegressionCorpusVault, CounterexampleRecord } from '../corpus/vault.js'
 import { SmartPatchExplainer } from '../reporter/patch-explainer.js';
 import { HtmlDashboardGenerator } from '../reporter/html-generator.js';
 import { ConcurrencyStressHarness } from '../concurrency/harness.js';
+import { CodeCoverageEngine } from '../coverage/engine.js';
+import { DependencySecurityScanner } from '../security/dependency-scanner.js';
 
 export interface VerifyAndHealOptions {
   specPath: string;
@@ -37,6 +39,8 @@ export class SpecVerificationAgent {
   private patchExplainer: SmartPatchExplainer;
   private htmlGenerator: HtmlDashboardGenerator;
   private concurrencyHarness: ConcurrencyStressHarness;
+  private coverageEngine: CodeCoverageEngine;
+  private securityScanner: DependencySecurityScanner;
 
   private readonly author = 'franca roscilli';
   private readonly email = 'francaroscillidev@gmail.com';
@@ -55,6 +59,8 @@ export class SpecVerificationAgent {
     this.patchExplainer = new SmartPatchExplainer();
     this.htmlGenerator = new HtmlDashboardGenerator();
     this.concurrencyHarness = new ConcurrencyStressHarness();
+    this.coverageEngine = new CodeCoverageEngine();
+    this.securityScanner = new DependencySecurityScanner();
   }
 
   async run(options: VerifyAndHealOptions): Promise<VerificationReport> {
@@ -65,7 +71,7 @@ export class SpecVerificationAgent {
     const email = options.email || this.email;
     const github = options.github || this.github;
 
-    console.log(chalk.bold.blue('\n🚀 Avvio Git-Native Spec-to-Code Verification Agent [V6 - Full Cockpit]'));
+    console.log(chalk.bold.blue('\n🚀 Avvio Git-Native Spec-to-Code Verification Agent [V7 - Ultimate Cockpit]'));
     console.log(chalk.cyan(`✍️ Autore & Certificatore: ${author} <${email}> (@${github})`));
     console.log(chalk.gray(`Spec: ${options.specPath}`));
     console.log(chalk.gray(`Target Dir: ${options.targetDir}`));
@@ -189,21 +195,31 @@ ${mutationResult.survivedMutants > 0 ? `\n> ⚠️ *Attenzione*: Alcuni mutanti 
 - **Esito Quality Gate**: ${astAudit.passedQualityGate ? '✅ **SUPERATO**' : '⚠️ **ATTENZIONE**'}
 `;
 
-    // 6. Concurrency Stress Test
-    console.log(chalk.yellow('\n[Fase 6] Fuzzing di Concorrenza & Race Conditions...'));
+    // 6. Branch & Condition Coverage
+    console.log(chalk.yellow('\n[Fase 6] Calcolo Branch & Statement Coverage...'));
+    const coverage = await this.coverageEngine.computeCoverage(targetFilePath, testFilePath, process.cwd());
+    const coverageMd = this.coverageEngine.generateMarkdown(coverage);
+
+    // 7. Dependency Security CVE Scan
+    console.log(chalk.yellow('\n[Fase 7] Scansione Vulnerabilità Dipendenze (Supply Chain CVE Gate)...'));
+    const securityAudit = await this.securityScanner.scanDependencies(process.cwd());
+    const securityMd = this.securityScanner.generateMarkdown(securityAudit);
+
+    // 8. Concurrency Stress Test
+    console.log(chalk.yellow('\n[Fase 8] Fuzzing di Concorrenza & Race Conditions...'));
     const concurrencyRes = await this.concurrencyHarness.testInterleavings(20, 50, () => true);
     const concurrencyMd = this.concurrencyHarness.generateMarkdown(concurrencyRes);
 
-    // 7. Performance & Asymptotic Complexity Guard
-    console.log(chalk.yellow('\n[Fase 7] Micro-Benchmark & Prevenzione Regressioni di Prestazioni...'));
+    // 9. Performance & Asymptotic Complexity Guard
+    console.log(chalk.yellow('\n[Fase 9] Micro-Benchmark & Prevenzione Regressioni di Prestazioni...'));
     const perfProfile = await this.perfGuard.profileBenchmark('TokenBucketRateLimiter.tryConsume()', () => {
       let x = 0;
       for (let j = 0; j < 50; j++) x += j;
     });
     const perfMd = this.perfGuard.generateMarkdown([perfProfile]);
 
-    // 8. Permanent Regression Corpus Vault
-    console.log(chalk.yellow('\n[Fase 8] Generazione Permanent Regression Vault Shield...'));
+    // 10. Permanent Regression Corpus Vault
+    console.log(chalk.yellow('\n[Fase 10] Generazione Permanent Regression Vault Shield...'));
     const regressionShieldCode = this.corpusVault.generatePermanentRegressionSuite(
       './implementation.js',
       historicalCorpus
@@ -211,8 +227,8 @@ ${mutationResult.survivedMutants > 0 ? `\n> ⚠️ *Attenzione*: Alcuni mutanti 
     const regressionSuitePath = path.join(options.targetDir, 'regression_shield.spec.ts');
     await fs.writeFile(regressionSuitePath, regressionShieldCode, 'utf-8');
 
-    // 9. Patch Diff Explanation
-    console.log(chalk.yellow('\n[Fase 9] Analisi Differenziale della Patch di Self-Healing...'));
+    // 11. Patch Diff Explanation
+    console.log(chalk.yellow('\n[Fase 11] Analisi Differenziale della Patch di Self-Healing...'));
     const patchSummary = await this.patchExplainer.compareAndExplain(
       backupInitialPath,
       targetFilePath,
@@ -220,7 +236,7 @@ ${mutationResult.survivedMutants > 0 ? `\n> ⚠️ *Attenzione*: Alcuni mutanti 
     );
     const patchMd = this.patchExplainer.generateMarkdown(patchSummary);
 
-    // 10. Fuzzing & Shrinking Telemetry
+    // 12. Fuzzing & Shrinking Telemetry
     const telemetryMd = this.telemetryTracker.generateAsciiChart({
       totalFuzzCases: 1000,
       seed: Math.floor(Math.random() * 1000000),
@@ -233,8 +249,8 @@ ${mutationResult.survivedMutants > 0 ? `\n> ⚠️ *Attenzione*: Alcuni mutanti 
       })),
     });
 
-    // 11. Cryptographic SLSA Attestation con Autore Personalizzato
-    console.log(chalk.yellow('\n[Fase 10] Generazione Sigillo Crittografico Anti-Manomissione...'));
+    // 13. Cryptographic SLSA Attestation
+    console.log(chalk.yellow('\n[Fase 12] Generazione Sigillo Crittografico Anti-Manomissione...'));
     const attestation = this.attestor.createAttestation({
       specContent,
       codeContent: currentCode,
@@ -245,8 +261,8 @@ ${mutationResult.survivedMutants > 0 ? `\n> ⚠️ *Attenzione*: Alcuni mutanti 
       github,
     });
 
-    // 12. Interactive HTML Cockpit Dashboard con Firma Autore
-    console.log(chalk.yellow('\n[Fase 11] Esportazione Standalone HTML Cockpit Dashboard...'));
+    // 14. Interactive HTML Cockpit Dashboard
+    console.log(chalk.yellow('\n[Fase 13] Esportazione Standalone HTML Cockpit Dashboard...'));
     const htmlCockpit = this.htmlGenerator.generateHtml({
       projectName: 'TokenBucketRateLimiter',
       timestamp: new Date().toISOString(),
@@ -275,10 +291,9 @@ ${mutationResult.survivedMutants > 0 ? `\n> ⚠️ *Attenzione*: Alcuni mutanti 
 
     const htmlDashboardPath = path.join(options.targetDir, 'verification_dashboard.html');
     await fs.writeFile(htmlDashboardPath, htmlCockpit, 'utf-8');
-    console.log(chalk.green(`🌐 Interactive HTML Cockpit salvata in: ${htmlDashboardPath}`));
 
-    // 13. Assemblaggio Safety Report Markdown
-    console.log(chalk.yellow('\n[Fase 12] Assemblaggio Safety Report Completo...'));
+    // 15. Assemblaggio Safety Report Completo
+    console.log(chalk.yellow('\n[Fase 14] Assemblaggio Safety Report Completo...'));
     let markdownSummary = await this.llm.generateSafetyReport({
       specContent,
       properties: synthesis.properties,
@@ -286,7 +301,7 @@ ${mutationResult.survivedMutants > 0 ? `\n> ⚠️ *Attenzione*: Alcuni mutanti 
       finalCode: currentCode,
     });
 
-    markdownSummary += '\n' + specLintMd + '\n' + patchMd + '\n' + mutationReportMd + '\n' + astReportMd + '\n' + concurrencyMd + '\n' + perfMd + '\n' + telemetryMd + '\n' + attestation.certificateMarkdown;
+    markdownSummary += '\n' + specLintMd + '\n' + patchMd + '\n' + mutationReportMd + '\n' + coverageMd + '\n' + securityMd + '\n' + astReportMd + '\n' + concurrencyMd + '\n' + perfMd + '\n' + telemetryMd + '\n' + attestation.certificateMarkdown;
 
     const reportPath = path.join(options.targetDir, 'VERIFICATION_REPORT.md');
     await fs.writeFile(reportPath, markdownSummary, 'utf-8');
