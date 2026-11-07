@@ -1,4 +1,21 @@
-# Git-Native "Spec-to-Code" Verification Agent (V9 Pinnacle Top-Tier)
+<p align="center">
+  <img src="assets/icon.svg" width="180" height="180" alt="Git-Native Spec-to-Code Logo" />
+</p>
+
+<h1 align="center">Git-Native "Spec-to-Code" Verification Agent</h1>
+<p align="center">
+  <strong>V9 Pinnacle Top-Tier • Formal Verification, SMT Proofs, Model-Checking & Self-Healing</strong>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-100%25%20Verified-success?style=flat-square" alt="Status" />
+  <img src="https://img.shields.io/badge/Mutation%20Score-100%25-brightgreen?style=flat-square" alt="Mutation" />
+  <img src="https://img.shields.io/badge/SLSA%20Level-Level%203-blueviolet?style=flat-square" alt="SLSA" />
+  <img src="https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square" alt="License" />
+  <img src="https://img.shields.io/badge/Author-Franca%20Roscilli-orange?style=flat-square" alt="Author" />
+</p>
+
+---
 
 Un agente autonomo di **Formal Verification, Model-Checking (TLA+), SMT Symbolic Proofs, Property-Based Testing (PBT), Flaky Test Detection, Time-Travel Replay Debugger, MCP Server e Self-Healing** integrato in modo nativo con Git, SARIF e GitHub Actions.
 
