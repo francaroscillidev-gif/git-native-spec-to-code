@@ -1,0 +1,27 @@
+name: "Automated Formal Verification Release Check"
+
+# This workflow can be triggered on workflow_dispatch or schedule
+on:
+  workflow_dispatch:
+
+jobs:
+  audit-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22 Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Core Test Suite (100% Passing Gate)
+        run: npm test
+
+      - name: Build TypeScript Production Assets
+        run: npm run build

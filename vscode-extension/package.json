@@ -1,0 +1,53 @@
+{
+  "name": "vscode-spec-to-code",
+  "displayName": "Spec-to-Code Formal Verification & Self-Healing",
+  "description": "Deterministic Property-Based Verification, Mutation Testing & Self-Healing Cockpit for VS Code and Cursor.",
+  "version": "1.0.0",
+  "publisher": "francaroscillidev",
+  "author": "Franca Roscilli <francaroscillidev@gmail.com> (https://github.com/francaroscillidev-gif)",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Testing",
+    "Linters",
+    "Programming Languages"
+  ],
+  "icon": "icon.png",
+  "keywords": [
+    "formal verification",
+    "property-based testing",
+    "self-healing",
+    "fast-check",
+    "tla-plus",
+    "smt solver"
+  ],
+  "activationEvents": [
+    "onCommand:specVerify.run",
+    "onCommand:specVerify.openCockpit"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "specVerify.run",
+        "title": "Spec-Verify: Run Formal Verification & Self-Healing",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "specVerify.openCockpit",
+        "title": "Spec-Verify: Open Interactive Cockpit Webview",
+        "icon": "$(dashboard)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceExtname == .md || resourceExtname == .ts",
+          "command": "specVerify.run",
+          "group": "verification"
+        }
+      ]
+    }
+  }
+}
