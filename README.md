@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/icon.svg" width="180" height="180" alt="Git-Native Spec-to-Code Logo" />
+  <img src="assets/icon.png" width="220" height="220" alt="Git-Native Spec-to-Code Logo" style="border-radius: 40px; box-shadow: 0 12px 32px rgba(0,0,0,0.5);" />
 </p>
 
 <h1 align="center">Git-Native "Spec-to-Code" Verification Agent</h1>
