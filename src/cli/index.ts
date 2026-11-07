@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { Command } from 'commander';
 import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
@@ -14,7 +15,7 @@ const program = new Command();
 program
   .name('spec-verify')
   .description('Git-Native Spec-to-Code Verification Agent with Property-Based Testing, Mutation Testing & Self-Healing')
-  .version('2.0.0');
+  .version('9.0.0');
 
 program
   .command('verify')
@@ -80,6 +81,24 @@ program
     } catch (err: any) {
       console.error(chalk.red(`Git PR Check Error: ${err.message}`));
       process.exit(1);
+    }
+  });
+
+program
+  .command('install-hooks')
+  .description('Installa il Git Pre-Commit Hook per la verifica formale automatica pre-commit')
+  .action(async () => {
+    try {
+      const hookPath = path.resolve('.git/hooks/pre-commit');
+      const hookScript = `#!/bin/sh
+# Git-Native Spec-to-Code Pre-Commit Guard (by Franca Roscilli)
+echo "🛡️ Esecuzione controllo di verifica formale pre-commit..."
+npx tsx src/cli/index.ts pr-check || exit 1
+`;
+      await fs.writeFile(hookPath, hookScript, { mode: 0o755 });
+      console.log(chalk.bold.green('✔ Git Pre-Commit Hook installato con successo in .git/hooks/pre-commit'));
+    } catch (err: any) {
+      console.error(chalk.red(`Errore installazione hook: ${err.message}`));
     }
   });
 

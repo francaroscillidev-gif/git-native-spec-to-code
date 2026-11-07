@@ -1,31 +1,48 @@
 {
   "name": "git-native-spec-to-code",
-  "version": "1.0.0",
+  "version": "9.0.0",
   "description": "Git-Native Spec-to-Code Verification Agent with Property-Based Testing, Mutation Testing & Self-Healing",
   "author": "franca roscilli <francaroscillidev@gmail.com> (https://github.com/francaroscillidev-gif)",
   "repository": {
     "type": "git",
     "url": "https://github.com/francaroscillidev-gif/git-native-spec-to-code"
   },
-  "main": "dist/cli/index.js",
+  "bin": {
+    "spec-verify": "./dist/cli/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "action.yml",
+    "LICENSE",
+    "README.md",
+    "assets"
+  ],
   "scripts": {
     "build": "tsc",
-    "verify": "tsx src/cli/index.ts verify",
-    "test": "vitest run"
+    "verify": "tsx src/cli/index.ts verify --spec examples/rate-limiter/spec.md",
+    "test": "vitest run tests/engine.test.ts"
   },
   "keywords": [
     "formal-verification",
     "property-based-testing",
     "fast-check",
     "self-healing",
-    "mutation-testing"
+    "mutation-testing",
+    "tla-plus",
+    "mcp-server",
+    "sarif",
+    "slsa"
   ],
   "license": "Apache-2.0",
   "devDependencies": {
     "@babel/generator": "^7.26.5",
     "@babel/parser": "^7.26.7",
     "@babel/traverse": "^7.26.7",
-    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "@types/babel__generator": "^7.27.0",
+    "@types/babel__traverse": "^7.28.0",
     "@types/node": "^22.13.1",
     "chalk": "^5.4.1",
     "commander": "^13.1.0",
@@ -34,6 +51,6 @@
     "simple-git": "^3.27.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
-    "vitest": "^3.0.5"
+    "vitest": "^3.2.7"
   }
 }

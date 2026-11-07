@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git-Native Spec-to-Code Verification Cockpit | Live Demo</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #090d16;
+      color: #f0f6fc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    .hero {
+      text-align: center;
+      max-width: 800px;
+      margin-bottom: 30px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    h1 { margin: 0 0 10px 0; font-size: 2.2rem; }
+    p { color: #94a3b8; font-size: 1.05rem; line-height: 1.6; }
+    .btn {
+      display: inline-block;
+      background: #2563eb;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #1d4ed8; }
+    .cockpit-frame {
+      width: 100%;
+      max-width: 1100px;
+      height: 900px;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      overflow: hidden;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="badge">🛡️ Formal Verification & Self-Healing Agent • V9 Pinnacle</div>
+    <h1>Git-Native Spec-to-Code Live Cockpit</h1>
+    <p>
+      Created by <strong>Franca Roscilli</strong> (<a href="https://github.com/francaroscillidev-gif" style="color: #60a5fa;">@francaroscillidev-gif</a>).<br>
+      Explore the live verification telemetry, AST mutation results, SMT proofs and SLSA Level 3 cryptographic attestation below.
+    </p>
+    <a href="https://github.com/francaroscillidev-gif/git-native-spec-to-code" class="btn">View on GitHub</a>
+  </div>
+
+  <div class="cockpit-frame">
+    <iframe src="../examples/rate-limiter/verified/verification_dashboard.html"></iframe>
+  </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+name: 'Git-Native Spec-to-Code Verification Agent'
+description: 'Autonomous formal verification, property-based testing, mutation testing and self-healing for mission-critical software.'
+author: 'Franca Roscilli <francaroscillidev@gmail.com> (https://github.com/francaroscillidev-gif)'
+branding:
+  icon: 'shield'
+  color: 'green'
+
+inputs:
+  spec:
+    description: 'Path to technical specification file (markdown / txt / json)'
+    required: true
+    default: 'spec.md'
+  target-dir:
+    description: 'Output directory for generated verified code, tests, and reports'
+    required: false
+    default: './output'
+  max-iterations:
+    description: 'Maximum self-healing rounds'
+    required: false
+    default: '4'
+  run-mutation:
+    description: 'Enable AST Mutation Testing gate'
+    required: false
+    default: 'true'
+
+outputs:
+  verified:
+    description: 'Whether 100% formal verification and quality gates passed'
+  mutation-score:
+    description: 'Percentage of AST mutants killed'
+  report-path:
+    description: 'Absolute path to generated VERIFICATION_REPORT.md'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js Environment
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+
+    - name: Run Spec Verification Engine
+      shell: bash
+      run: |
+        npx tsx src/cli/index.ts verify --spec "${{ inputs.spec }}" --target-dir "${{ inputs.target-dir }}" --max-iterations "${{ inputs.max-iterations }}"
