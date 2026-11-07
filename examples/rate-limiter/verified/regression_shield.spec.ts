@@ -7,7 +7,7 @@ import { TokenBucketRateLimiter } from './implementation.js';
  * NON ELIMINARE: funge da scudo anti-regressione perpetuo.
  */
 describe('Permanent Historical Regression Corpus', () => {
-  it('Historical Regression #1: Token Refill Invariant (discovered at 2026-11-06T17:17:08.664Z)', () => {
+  it('Historical Regression #1: Token Refill Invariant (discovered at 2026-11-07T08:24:55.623Z)', () => {
     // Falsifying input salvato dal loop di self-healing: [10,1,100]
     const input = [10,1,100];
     // Esecuzione controllata del caso storico per garantire che non si ripresenti MAI

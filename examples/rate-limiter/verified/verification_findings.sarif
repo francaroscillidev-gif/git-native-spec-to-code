@@ -1,0 +1,59 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "GitNative-SpecToCode-Agent",
+          "version": "9.0.0",
+          "informationUri": "https://github.com/francaroscillidev-gif/git-native-spec-to-code",
+          "rules": [
+            {
+              "id": "SPEC001",
+              "name": "PropertyInvariantViolation",
+              "shortDescription": {
+                "text": "Invariante formale o proprietà violata"
+              }
+            },
+            {
+              "id": "SPEC002",
+              "name": "MutationTestingWarning",
+              "shortDescription": {
+                "text": "Mutante sopravvissuto al testing"
+              }
+            },
+            {
+              "id": "SPEC003",
+              "name": "CyclomaticComplexityWarning",
+              "shortDescription": {
+                "text": "Complessità ciclomatica elevata"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "SPEC001",
+          "level": "note",
+          "message": {
+            "text": "Tutti i contratti invarianti e PBT verificati al 100%"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Users/musica/Desktop/antigravity proj/git native spec to code/examples/rate-limiter/verified/implementation.ts"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

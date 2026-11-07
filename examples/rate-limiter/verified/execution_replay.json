@@ -1,0 +1,31 @@
+[
+  {
+    "step": 1,
+    "timestamp": "2026-11-07T08:24:54.402Z",
+    "action": "INITIAL_SYNTHESIS",
+    "codeState": "export class TokenBucketRateLimiter {\n  private capacity: number;\n  private refillRate: number; // token al secondo\n  private tokens: number;\n  private lastRefillMs: number = 0;\n\n  constructor(capacity: number, refillRate: number) {\n    this.capacity = capacity;\n    this.refillRate = refillRate;\n    this.tokens = capacity;\n  }\n\n  getTokens(): number {\n    return this.tokens;\n  }\n\n  advanceTime(ms: number): void {\n    // BUG INTENZIONALE: non calcola correttamente i millisecondi (divide per 100 invece di 1000)\n    const addedTokens = Math.floor((ms / 100) * this.refillRate);\n    this.tokens = Math.min(this.capacity, this.tokens + addedTokens);\n  }\n\n  tryConsume(cost: number): boolean {\n    if (this.tokens >= cost) {\n      this.tokens -= cost;\n      return true;\n    }\n    return false;\n  }\n}\n",
+    "diffSummary": "Sintesi iniziale codice e test di proprietà PBT"
+  },
+  {
+    "step": 2,
+    "timestamp": "2026-11-07T08:24:55.623Z",
+    "action": "SANDBOX_FAILURE",
+    "codeState": "export class TokenBucketRateLimiter {\n  private capacity: number;\n  private refillRate: number; // token al secondo\n  private tokens: number;\n  private lastRefillMs: number = 0;\n\n  constructor(capacity: number, refillRate: number) {\n    this.capacity = capacity;\n    this.refillRate = refillRate;\n    this.tokens = capacity;\n  }\n\n  getTokens(): number {\n    return this.tokens;\n  }\n\n  advanceTime(ms: number): void {\n    // BUG INTENZIONALE: non calcola correttamente i millisecondi (divide per 100 invece di 1000)\n    const addedTokens = Math.floor((ms / 100) * this.refillRate);\n    this.tokens = Math.min(this.capacity, this.tokens + addedTokens);\n  }\n\n  tryConsume(cost: number): boolean {\n    if (this.tokens >= cost) {\n      this.tokens -= cost;\n      return true;\n    }\n    return false;\n  }\n}\n",
+    "counterexample": "[10,1,100]",
+    "errorTrace": "AssertionError: expected 1 to be +0 // Object.is equality"
+  },
+  {
+    "step": 3,
+    "timestamp": "2026-11-07T08:24:55.623Z",
+    "action": "SELF_HEALING_PATCH",
+    "codeState": "export class TokenBucketRateLimiter {\n  private capacity: number;\n  private refillRate: number; // token al secondo\n  private tokens: number;\n\n  constructor(capacity: number, refillRate: number) {\n    this.capacity = capacity;\n    this.refillRate = refillRate;\n    this.tokens = capacity;\n  }\n\n  getTokens(): number {\n    return this.tokens;\n  }\n\n  advanceTime(ms: number): void {\n    // FIX APPLICATO: conversione corretta da ms a secondi (/ 1000) e capping a capacity\n    const addedTokens = Math.floor((ms / 1000) * this.refillRate);\n    this.tokens = Math.min(this.capacity, this.tokens + addedTokens);\n  }\n\n  tryConsume(cost: number): boolean {\n    if (this.tokens >= cost) {\n      this.tokens -= cost;\n      return true;\n    }\n    return false;\n  }\n}\n",
+    "diffSummary": "Corretto il divisore da 100 a 1000 in advanceTime() per convertire accuratamente i millisecondi in secondi in base al tasso di refill definito nella specifica."
+  },
+  {
+    "step": 4,
+    "timestamp": "2026-11-07T08:25:00.008Z",
+    "action": "MUTATION_TESTING",
+    "codeState": "export class TokenBucketRateLimiter {\n  private capacity: number;\n  private refillRate: number; // token al secondo\n  private tokens: number;\n\n  constructor(capacity: number, refillRate: number) {\n    this.capacity = capacity;\n    this.refillRate = refillRate;\n    this.tokens = capacity;\n  }\n\n  getTokens(): number {\n    return this.tokens;\n  }\n\n  advanceTime(ms: number): void {\n    // FIX APPLICATO: conversione corretta da ms a secondi (/ 1000) e capping a capacity\n    const addedTokens = Math.floor((ms / 1000) * this.refillRate);\n    this.tokens = Math.min(this.capacity, this.tokens + addedTokens);\n  }\n\n  tryConsume(cost: number): boolean {\n    if (this.tokens >= cost) {\n      this.tokens -= cost;\n      return true;\n    }\n    return false;\n  }\n}\n",
+    "diffSummary": "Mutation score raggiunto: 100%"
+  }
+]
